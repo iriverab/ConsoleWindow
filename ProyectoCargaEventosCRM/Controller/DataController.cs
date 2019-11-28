@@ -25,27 +25,33 @@ namespace ProyectoCargaEventosCRM.Controller
             {
                 _cuerpo = CreateXMLString(obj);
                 _psXmlUnitario = string.Format("{0}{1}{2}", _cabecera, _cuerpo, _pie); //XML FINAL
-                //Grabamos registro en CRM
+                //Grabamos registro en CRM y obtenemos Id
                 _IdEvento = Convert.ToInt32(db.CRM_Eventos_Insert(_psXmlUnitario, "CreaTestEnsayoCharla", "", "Task.Net").First());
                 _TokenApi = LogIntoApiCepech();
 
                 if (_TokenApi == "")
-                    db.CRM_Eventos_Cerrar(_IdEvento, "ERROR EN LOGIN");
+                    db.CRM_Eventos_Cerrar(_IdEvento, "ERROR EN LOGIN"); //Grabamos respuesta erronea
                 else
                 {
-                    string psSalida = ConsumirMetodoFinal(_IdEvento, _TokenApi);
+                    string psSalida = ConsumirMetodoFinal(_IdEvento, _TokenApi); //Consumimos Api De cepech que permite integrar a CRM este graba la finaliacion del registro.
                     if (psSalida == "")
-                        db.CRM_Eventos_Cerrar(_IdEvento, "ERROR en consumo de API WiredToCRM");
+                        db.CRM_Eventos_Cerrar(_IdEvento, "ERROR en consumo de API WiredToCRM");//Grabamos respuesta erronea
                 }
-                ActualizarRegistro(obj.Id_reg);
+                ActualizarRegistro(obj.Id_reg); //Actualizamos tabla de paso Generada por EML que contiene las pruebas con sus puntajes
                 Console.Write(string.Format("{0}", _psXmlUnitario));
             }
             Console.ReadKey();
         }
 
+        /// <summary>
+        /// Metodo que permite Grabar en Api de Cepech la integracion con CRM
+        /// </summary>
+        /// <param name="idEvento">Evento Auxiliar</param>
+        /// <param name="tokenApi">Token en caso de necesitarlo</param>
+        /// <returns>Respuesta from API</returns>
         private string ConsumirMetodoFinal(int idEvento, string tokenApi)
         {
-            string psOut = EjecutarApi(string.Format("{0}{1}?Id={2}", ConfigurationManager.AppSettings["Ruta"].ToString(), "Cepech/WiredToCrm", idEvento.ToString()), JsonConvert.SerializeObject(new { usuario = "CRMCpech", password = "28zF02nXPVThAEAY" }), "GET", tokenApi);
+            string psOut = EjecutarApi(string.Format("{0}{1}?Id={2}", ConfigurationManager.AppSettings["Ruta"].ToString(), "Cepech/WiredToCrm", idEvento.ToString()), "", "GET", tokenApi);
             JObject jobject = JObject.Parse(psOut);
             if (jobject["codigo"].ToString() == "0")
                 return jobject["mensaje"].ToString();
@@ -53,6 +59,10 @@ namespace ProyectoCargaEventosCRM.Controller
                 return "";
         }
 
+        /// <summary>
+        /// Log en ApiCepech
+        /// </summary>
+        /// <returns>Token</returns>
         private string LogIntoApiCepech()
         {
             string psOut = EjecutarApi(string.Format("{0}{1}", ConfigurationManager.AppSettings["Ruta"].ToString(), "Token/getToken"), JsonConvert.SerializeObject(new { usuario = "CRMCpech", password = "28zF02nXPVThAEAY" }), "POST", "");
@@ -111,6 +121,10 @@ namespace ProyectoCargaEventosCRM.Controller
             return psSalida;
         }
 
+        /// <summary>
+        /// Actualizamos tabla temporal
+        /// </summary>
+        /// <param name="Id">IdRegistro</param>
         private void ActualizarRegistro(int Id)
         {
             db.CRM_RegistroUpdate(Id);
