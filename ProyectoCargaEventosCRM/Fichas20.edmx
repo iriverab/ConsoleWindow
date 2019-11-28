@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Fichas20Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'Fichas20.dbo.CRM_Registra_actividades_para_enviar_a_CRM' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="CRM_Registra_actividades_para_enviar_a_CRM">
+          <Key>
+            <PropertyRef Name="Id_reg" />
+          </Key>
+          <Property Name="Id_reg" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Rut" Type="int" />
+          <Property Name="digito_dv" Type="char" MaxLength="1" />
+          <Property Name="Tipo_actividad" Type="varchar" MaxLength="50" />
+          <Property Name="Nombre_actividad" Type="varchar" MaxLength="80" />
+          <Property Name="puntaje" Type="int" />
+          <Property Name="Fecha_actividad" Type="datetime" />
+          <Property Name="Estado" Type="char" MaxLength="10" />
+          <Property Name="Fecha_proceso_crm" Type="datetime" />
+          <Property Name="fecha_registro" Type="datetime" />
+        </EntityType>
+        <Function Name="CRM_envia_datos_clientePotencial" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="rut" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CRM_Eventos_Cerrar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Response" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="CRM_Eventos_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Xml_IN" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Method" Type="varchar" Mode="In" />
+          <Parameter Name="Response" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Origen" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="CRM_RegistroUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="Fichas20ModelStoreContainer">
+          <EntitySet Name="CRM_Registra_actividades_para_enviar_a_CRM" EntityType="Self.CRM_Registra_actividades_para_enviar_a_CRM" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CRM_Registra_actividades_para_enviar_a_CRM].[Id_reg] AS [Id_reg], 
+    [CRM_Registra_actividades_para_enviar_a_CRM].[Rut] AS [Rut], 
+    [CRM_Registra_actividades_para_enviar_a_CRM].[digito_dv] AS [digito_dv], 
+    [CRM_Registra_actividades_para_enviar_a_CRM].[Tipo_actividad] AS [Tipo_actividad], 
+    [CRM_Registra_actividades_para_enviar_a_CRM].[Nombre_actividad] AS [Nombre_actividad], 
+    [CRM_Registra_actividades_para_enviar_a_CRM].[puntaje] AS [puntaje], 
+    [CRM_Registra_actividades_para_enviar_a_CRM].[Fecha_actividad] AS [Fecha_actividad], 
+    [CRM_Registra_actividades_para_enviar_a_CRM].[Estado] AS [Estado], 
+    [CRM_Registra_actividades_para_enviar_a_CRM].[Fecha_proceso_crm] AS [Fecha_proceso_crm], 
+    [CRM_Registra_actividades_para_enviar_a_CRM].[fecha_registro] AS [fecha_registro]
+    FROM [dbo].[CRM_Registra_actividades_para_enviar_a_CRM] AS [CRM_Registra_actividades_para_enviar_a_CRM]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Fichas20Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CRM_Registra_actividades_para_enviar_a_CRM">
+          <Key>
+            <PropertyRef Name="Id_reg" />
+          </Key>
+          <Property Name="Id_reg" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rut" Type="Int32" />
+          <Property Name="digito_dv" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Tipo_actividad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre_actividad" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="puntaje" Type="Int32" />
+          <Property Name="Fecha_actividad" Type="DateTime" Precision="3" />
+          <Property Name="Estado" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Fecha_proceso_crm" Type="DateTime" Precision="3" />
+          <Property Name="fecha_registro" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="Fichas20Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CRM_Registra_actividades_para_enviar_a_CRM" EntityType="Self.CRM_Registra_actividades_para_enviar_a_CRM" />
+          <FunctionImport Name="CRM_envia_datos_clientePotencial" ReturnType="Collection(Fichas20Model.CRM_envia_datos_clientePotencial_Result)">
+          <Parameter Name="rut" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CRM_RegistroUpdate">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CRM_Eventos_Insert" ReturnType="Collection(Decimal)">
+            <Parameter Name="Xml_IN" Mode="In" Type="String" />
+            <Parameter Name="Method" Mode="In" Type="String" />
+            <Parameter Name="Response" Mode="In" Type="String" />
+            <Parameter Name="Origen" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CRM_Eventos_Cerrar" ReturnType="Collection(Int32)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Response" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="CRM_envia_datos_clientePotencial_Result">
+          <Property Type="Int32" Name="rut" Nullable="false" />
+          <Property Type="String" Name="dv" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="Nombres" Nullable="true" MaxLength="35" />
+          <Property Type="String" Name="Apellido_Paterno" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Apellido_Materno" Nullable="true" MaxLength="25" />
+          <Property Type="Int16" Name="ID_Comuna" Nullable="false" />
+          <Property Type="String" Name="fono_fijo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="fono_movil" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="correo" Nullable="true" MaxLength="70" />
+          <Property Type="String" Name="curso" Nullable="true" MaxLength="2" />
+          <Property Type="Int32" Name="colegio" Nullable="true" />
+          <Property Type="Int32" Name="ProgramaInteres1" Nullable="true" />
+          <Property Type="Int32" Name="ProgramaInteres2" Nullable="true" />
+          <Property Type="Int32" Name="ProgramaInteres3" Nullable="true" />
+          <Property Type="Int32" Name="SedeInteres1" Nullable="true" />
+          <Property Type="Int32" Name="SedeInteres2" Nullable="true" />
+          <Property Type="Int32" Name="SedeInteres3" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Fichas20ModelStoreContainer" CdmEntityContainer="Fichas20Entities">
+          <EntitySetMapping Name="CRM_Registra_actividades_para_enviar_a_CRM">
+            <EntityTypeMapping TypeName="Fichas20Model.CRM_Registra_actividades_para_enviar_a_CRM">
+              <MappingFragment StoreEntitySet="CRM_Registra_actividades_para_enviar_a_CRM">
+                <ScalarProperty Name="Id_reg" ColumnName="Id_reg" />
+                <ScalarProperty Name="Rut" ColumnName="Rut" />
+                <ScalarProperty Name="digito_dv" ColumnName="digito_dv" />
+                <ScalarProperty Name="Tipo_actividad" ColumnName="Tipo_actividad" />
+                <ScalarProperty Name="Nombre_actividad" ColumnName="Nombre_actividad" />
+                <ScalarProperty Name="puntaje" ColumnName="puntaje" />
+                <ScalarProperty Name="Fecha_actividad" ColumnName="Fecha_actividad" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Fecha_proceso_crm" ColumnName="Fecha_proceso_crm" />
+                <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CRM_envia_datos_clientePotencial" FunctionName="Fichas20Model.Store.CRM_envia_datos_clientePotencial">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Fichas20Model.CRM_envia_datos_clientePotencial_Result">
+                <ScalarProperty Name="rut" ColumnName="rut" />
+                <ScalarProperty Name="dv" ColumnName="dv" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellido_Paterno" ColumnName="Apellido_Paterno" />
+                <ScalarProperty Name="Apellido_Materno" ColumnName="Apellido_Materno" />
+                <ScalarProperty Name="ID_Comuna" ColumnName="ID_Comuna" />
+                <ScalarProperty Name="fono_fijo" ColumnName="fono_fijo" />
+                <ScalarProperty Name="fono_movil" ColumnName="fono_movil" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="curso" ColumnName="curso" />
+                <ScalarProperty Name="colegio" ColumnName="colegio" />
+                <ScalarProperty Name="ProgramaInteres1" ColumnName="ProgramaInteres1" />
+                <ScalarProperty Name="ProgramaInteres2" ColumnName="ProgramaInteres2" />
+                <ScalarProperty Name="ProgramaInteres3" ColumnName="ProgramaInteres3" />
+                <ScalarProperty Name="SedeInteres1" ColumnName="SedeInteres1" />
+                <ScalarProperty Name="SedeInteres2" ColumnName="SedeInteres2" />
+                <ScalarProperty Name="SedeInteres3" ColumnName="SedeInteres3" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CRM_RegistroUpdate" FunctionName="Fichas20Model.Store.CRM_RegistroUpdate" />
+          <FunctionImportMapping FunctionImportName="CRM_Eventos_Insert" FunctionName="Fichas20Model.Store.CRM_Eventos_Insert" />
+          <FunctionImportMapping FunctionImportName="CRM_Eventos_Cerrar" FunctionName="Fichas20Model.Store.CRM_Eventos_Cerrar" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
