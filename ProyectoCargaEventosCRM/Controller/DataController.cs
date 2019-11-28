@@ -16,7 +16,7 @@ namespace ProyectoCargaEventosCRM.Controller
         private Fichas20Entities db = new Fichas20Entities();
         internal void ProcesarEventos()
         {
-            var _ListadoRegistros = db.CRM_Registra_actividades_para_enviar_a_CRM.Where(x => x.Estado == "0").ToList();
+            var _ListadoRegistros = db.CRM_Registra_actividades_para_enviar_a_CRM.Where(x => x.Estado == "0").ToList().Take(1);
             string _cabecera = CreaCabecera();
             string _pie = CreaPie();
             string _cuerpo = "", _psXmlUnitario = "", _TokenApi = "";
@@ -34,12 +34,12 @@ namespace ProyectoCargaEventosCRM.Controller
                 else
                 {
                     string psSalida = ConsumirMetodoFinal(_IdEvento, _TokenApi);
-                    if(psSalida=="")
+                    if (psSalida == "")
                         db.CRM_Eventos_Cerrar(_IdEvento, "ERROR en consumo de API WiredToCRM");
                 }
                 ActualizarRegistro(obj.Id_reg);
+                Console.Write(string.Format("{0}", _psXmlUnitario));
             }
-            Console.Write(string.Format("{0}{1}{2}", _cabecera, _cuerpo, _pie));
             Console.ReadKey();
         }
 
