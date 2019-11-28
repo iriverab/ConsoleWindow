@@ -100,7 +100,6 @@ namespace ProyectoCargaEventosCRM.Controller
                     }
                     else
                         messge = httpClient.GetAsync(Ruta).Result;
-
                     if (messge.IsSuccessStatusCode)
                     {
                         string result = messge.Content.ReadAsStringAsync().Result;
